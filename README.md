@@ -44,9 +44,9 @@ five tightly integrated modules that communicate via ROS2 topics:
 ```
 RGB-D Camera → [detected_fruit] → Localization → [fruit_position] → Trajectory Planning
                                                                           ↓
-                                                                  Closed-loop Servoing
+                                                                    Closed-loop Servoing
                                                                           ↓
-                                                                Grasping & Cutting
+                                                                    Grasping & Cutting
 ```
 
 ---
