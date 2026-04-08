@@ -7,7 +7,7 @@ unified ROS2/Gazebo simulation framework.
 
 ---
 
-## 📌 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [System Architecture](#system-architecture)
@@ -53,7 +53,7 @@ RGB-D Camera → [detected_fruit] → Localization → [fruit_position] → Traj
 
 ## Modules
 
-### 1. 🎯 Vision-Based Perception
+### 1. Vision-Based Perception
 - Uses an **RGB-D camera** to detect fruits and capture depth information
 - Depth data improves reliability in cluttered foliage environments
 - 3D fruit position is computed and transformed to the robot's base frame:
@@ -62,12 +62,12 @@ RGB-D Camera → [detected_fruit] → Localization → [fruit_position] → Traj
 P_base = T_camera->base * P_camera
 ```
 
-### 2. 📍 3D Localization
+### 2. 3D Localization
 - Subscribes to the `detected_fruit` topic
 - Estimates fruit position and distance using RGB-D depth data
 - Publishes 3D coordinates to the `fruit_position` topic
 
-### 3. 🛤️ Trajectory Planning & Optimization
+### 3. Trajectory Planning & Optimization
 - Uses **forward kinematics (FK)** to determine current end-effector pose
 - Uses **inverse kinematics (IK)** to compute required joint angles to reach the fruit
 - Generates smooth joint trajectories using **quintic polynomial interpolation**:
@@ -79,12 +79,12 @@ y(t) = a₀ + a₁t + a₂t² + a₃t³ + a₄t⁴ + a₅t⁵
 This ensures smooth position, velocity, and acceleration profiles, minimizing 
 abrupt motion.
 
-### 4. 🔄 Closed-Loop Motion Control
+### 4. Closed-Loop Motion Control
 - Receives required joint angles from the trajectory planning node
 - Drives motors to the target configuration
 - Sends current joint angles back for FK feedback and error correction
 
-### 5. ✋ Adaptive Grasping, Cutting & Sorting
+### 5. Adaptive Grasping, Cutting & Sorting
 - A **mechanical gripper with a cutter** stabilizes and detaches the fruit at the peduncle
 - A virtual **force sensor** at the end-effector prevents crop damage
 - Visual feedback continuously corrects positional errors during approach
@@ -116,12 +116,12 @@ greenhouse rows on the ground, as shown in the simulation screenshot below.
 
 The full pipeline is tested in Gazebo. Performance is tracked using:
 
-- ✅ **Harvest success rate**
-- ⏱️ **Average cycle time per fruit**
-- 💥 **Collision frequency**
-- 📈 **Trajectory smoothness**
-- 🎯 **Fruit detection and localization accuracy**
-- 🔵 **Sorting accuracy by color and size**
+- **Harvest success rate**
+- **Average cycle time per fruit**
+- **Collision frequency**
+- **Trajectory smoothness**
+- **Fruit detection and localization accuracy**
+- **Sorting accuracy by color and size**
 
 ---
 
