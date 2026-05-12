@@ -133,16 +133,3 @@ The full pipeline is tested in Gazebo. Performance is tracked using:
 | **Mensah Kofi** | RGB-D perception and fruit localization |
 | **Wamyil Joseph** | Closed-loop motor control |
 | **Abdullahi Farouk** | Rover control and end-effector functions |
-
----
-
-## References
-
-1. Yudha et al. — *Arm Robot Manipulator Design and Control for Trajectory Tracking: A Review* (2018)
-2. Qian et al. — *Manipulation Task Simulation using ROS and Gazebo* (2014)
-3. Xu et al. — *Optimal Trajectory Planning for Manipulators with Efficiency and Smoothness Constraint* (2023)
-4. Romero et al. — *Trajectory Planning for Robotic Manipulators in Automated Palletizing: A Comprehensive Review* (2025)
-5. Dai et al. — *A Review of Spatial Robotic Arm Trajectory Planning* (2022)
-6. Van Henten et al. — *An Autonomous Robot for Harvesting Cucumbers in Greenhouses* (2002)
-7. Ahmed et al. — *Cucumber Picking Robots: Technological Progress, Challenges, and Future Directions* (2026)
-8. Aksoy et al. — *Real-Time Vision-Based Robotic Arm Controller Using ROS and Gazebo*
