@@ -1,0 +1,38 @@
+# fruit_registry.yaml
+# Must mirror greenhouse.world.xacro exactly.
+# Any mismatch causes the arm to delete the WRONG fruit (matched by
+# nearest registry entry within lookup_tolerance_m of the perceived
+# world position).
+
+fruits:
+  - name: "fruit_r1_01_a"
+    x: 2.4
+    y: -0.55
+    z: 0.7
+    size: "big"
+
+  - name: "fruit_r1_02_a"
+    x: 1.2
+    y: -0.55
+    z: 0.7
+    size: "small"
+
+  - name: "fruit_r1_03_a"
+    x: 0.0
+    y: -0.55
+    z: 0.6
+    size: "big"
+
+  - name: "fruit_r1_04_a"
+    x: -1.2
+    y: -0.55
+    z: 0.6
+    size: "big"
+
+  - name: "fruit_r1_05_a"
+    x: -2.4
+    y: -0.55
+    z: 0.6
+    size: "small"
+
+lookup_tolerance_m: 0.3

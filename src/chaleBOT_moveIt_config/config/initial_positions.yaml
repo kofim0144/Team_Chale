@@ -1,0 +1,11 @@
+# Default initial positions for chaleBOT's ros2_control fake system
+
+initial_positions:
+  Revolute_14: 0.00
+  Revolute_15: 0.00
+  Revolute_16: 0.00
+  Revolute_17: 0.00
+  Revolute_18: 0.00
+  Revolute_27: 0.00
+  Slider_20: 0.00
+  virtual_joint: 0.00

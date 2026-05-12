@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    SRDF for chaleBOT (FIXED for the real Gazebo+ros2_control setup).
+    
+    Changes from auto-generated:
+      1. arm_group uses <chain> instead of listing virtual_joint + Revolute_*
+      2. virtual_joint declaration's child_link is base_footprint (the real root)
+         and parent_frame is odom (matches DiffDrive's TF parent)
+      3. Group_states no longer reference Revolute_27 in arm_group
+         (Revolute_27 is camera_tower_group, not arm)
+      4. group_state for camera_tower_group with a sane value
+-->
+<robot name="chaleBOT">
+
+    <!-- ===== PLANNING GROUPS ===== -->
+
+    <group name="arm_group">
+        <chain base_link="base_link" tip_link="gripper_stator_1"/>
+    </group>
+
+    <group name="end_effector_group">
+        <link name="gripper_stator_1"/>
+        <link name="gripper_clamp_1"/>
+        <joint name="Slider_20"/>
+    </group>
+
+    <group name="camera_tower_group">
+        <joint name="Revolute_27"/>
+        <link name="camera_1"/>
+    </group>
+
+    <!-- ===== GROUP STATES ===== -->
+
+    <group_state name="pose_neutral" group="arm_group">
+        <joint name="Revolute_14" value="0"/>
+        <joint name="Revolute_15" value="-0.96"/>
+        <joint name="Revolute_16" value="1.92"/>
+        <joint name="Revolute_17" value="0.61"/>
+        <joint name="Revolute_18" value="0"/>
+        <!-- <joint name="Slider_20" value="0"/> -->
+    </group_state>
+
+    <group_state name="pose_drop_small" group="arm_group">
+        <joint name="Revolute_14" value="-1.6134"/>
+        <joint name="Revolute_15" value="1.3618"/>
+        <joint name="Revolute_16" value="0.5985"/>
+        <joint name="Revolute_17" value="0.3036"/>
+        <joint name="Revolute_18" value="0"/>
+    </group_state>
+
+    <group_state name="pose_drop_big" group="arm_group">
+        <joint name="Revolute_14" value="-1.9603"/>
+        <joint name="Revolute_15" value="1.2577"/>
+        <joint name="Revolute_16" value="0.6679"/>
+        <joint name="Revolute_17" value="0.4944"/>
+        <joint name="Revolute_18" value="0"/>
+
+    </group_state>
+
+    <group_state name="pose_opened_gripper" group="end_effector_group">
+        <joint name="Slider_20" value="0"/>
+    </group_state>
+
+    <group_state name="pose_closed_gripper" group="end_effector_group">
+        <joint name="Slider_20" value="0.04"/>
+    </group_state>
+
+    <group_state name="look_forward" group="camera_tower_group">
+        <joint name="Revolute_27" value="0"/>
+    </group_state>
+
+    <group_state name="look_right" group="camera_tower_group">
+        <joint name="Revolute_27" value="-1.5708"/>
+    </group_state>
+
+    <group_state name="look_left" group="camera_tower_group">
+        <joint name="Revolute_27" value="1.5708"/>
+    </group_state>
+
+    <!-- ===== END EFFECTOR ===== -->
+
+    <end_effector name="gripper_end_effector"
+                  parent_link="arm_link_5_1"
+                  group="end_effector_group"/>
+
+    <!-- ===== VIRTUAL JOINT =====
+         Declares the floating connection from the ROS world to the robot.
+         Since base_footprint is the URDF root in our setup, the virtual
+         joint connects odom -> base_footprint. MoveIt won't try to
+         control this; it's just informational.
+    -->
+    <virtual_joint name="virtual_joint"
+                   type="planar"
+                   parent_frame="odom"
+                   child_link="base_footprint"/>
+
+
+    <!-- Wheels are driven by Gazebo's DiffDrive plugin, not by MoveIt.
+     Marking them passive tells MoveIt to ignore them in state checking. -->
+<passive_joint name="Revolute_23"/>
+<passive_joint name="Revolute_24"/>
+<passive_joint name="Revolute_25"/>
+<passive_joint name="Revolute_26"/>
+
+
+    <!-- ===== DISABLE COLLISIONS =====
+         Carried over from the auto-generated SRDF. Identifies which
+         link pairs are physically guaranteed never to collide and so
+         can be skipped during collision checking.
+    -->
+    <disable_collisions link1="arm_link_1_1" link2="arm_link_2_1" reason="Adjacent"/>
+    <disable_collisions link1="arm_link_1_1" link2="arm_link_3_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="arm_link_4_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="arm_link_5_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="base_link" reason="Adjacent"/>
+    <disable_collisions link1="arm_link_1_1" link2="camera_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="gripper_clamp_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="gripper_stator_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="leftAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="pick_basket_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_1_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="arm_link_3_1" reason="Adjacent"/>
+    <disable_collisions link1="arm_link_2_1" link2="arm_link_4_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="arm_link_5_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="base_link" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="camera_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="gripper_clamp_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="gripper_stator_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="leftAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="pick_basket_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_2_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="arm_link_4_1" reason="Adjacent"/>
+    <disable_collisions link1="arm_link_3_1" link2="arm_link_5_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="gripper_clamp_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="gripper_stator_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="leftAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="pick_basket_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_3_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="arm_link_5_1" reason="Adjacent"/>
+    <disable_collisions link1="arm_link_4_1" link2="gripper_clamp_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="gripper_stator_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="leftAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="pick_basket_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_4_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_5_1" link2="gripper_clamp_1" reason="Never"/>
+    <disable_collisions link1="arm_link_5_1" link2="gripper_stator_1" reason="Adjacent"/>
+    <disable_collisions link1="arm_link_5_1" link2="leftAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_5_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_5_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="arm_link_5_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="base_link" link2="base_footprint" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="camera_1" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leftAFT_wheel_1" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leftFWD_wheel_1" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="pick_basket_1" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="rightAFT_wheel_1" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="rightFWD_wheel_1" reason="Adjacent"/>
+    <disable_collisions link1="camera_1" link2="gripper_clamp_1" reason="Never"/>
+    <disable_collisions link1="camera_1" link2="leftAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="camera_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="camera_1" link2="pick_basket_1" reason="Never"/>
+    <disable_collisions link1="camera_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="camera_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="gripper_clamp_1" link2="gripper_stator_1" reason="Adjacent"/>
+    <disable_collisions link1="leftAFT_wheel_1" link2="leftFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="leftAFT_wheel_1" link2="pick_basket_1" reason="Default"/>
+    <disable_collisions link1="leftAFT_wheel_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="leftAFT_wheel_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="leftFWD_wheel_1" link2="pick_basket_1" reason="Never"/>
+    <disable_collisions link1="leftFWD_wheel_1" link2="rightAFT_wheel_1" reason="Never"/>
+    <disable_collisions link1="leftFWD_wheel_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="pick_basket_1" link2="rightAFT_wheel_1" reason="Default"/>
+    <disable_collisions link1="pick_basket_1" link2="rightFWD_wheel_1" reason="Never"/>
+    <disable_collisions link1="rightAFT_wheel_1" link2="rightFWD_wheel_1" reason="Never"/>
+
+</robot>

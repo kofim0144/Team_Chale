@@ -1,0 +1,505 @@
+<?xml version="1.0"?>
+<robot name="chaleBOT" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find chaleBOT_description)/urdf/materials.xacro" />
+<!--   <xacro:include filename="$(find chaleBOT_description)/urdf/chaleBOT.trans" /> -->
+  <xacro:include filename="$(find chaleBOT_description)/urdf/chaleBOT.gazebo" />
+
+<link name="base_footprint"/>
+
+<joint name="base_footprint_to_base_link" type="fixed">
+    <parent link="base_footprint"/>
+    <child  link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 -0.125" rpy="0 0 0"/>
+      <mass value="20"/>
+      <inertia ixx="52.987821" iyy="147.616097" izz="159.325124" ixy="0.030807" iyz="0.030981" ixz="-0.061962"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -0.125" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.125" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="arm_link_1_1">
+    <inertial>
+      <origin xyz="-0.0 -0.0 -0.85" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.009148" iyy="0.008029" izz="0.003193" ixy="0.000469" iyz="-0.002174" ixz="0.000791"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.0 -0.0 -0.85" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.0 -0.0 -0.85" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_1_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="arm_link_2_1">
+    <inertial>
+      <origin xyz="0 0 -0.85" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.019674" iyy="0.059289" izz="0.061021" ixy="-0.016621" iyz="0.006801" ixz="0.018686"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -0.85" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_2_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -0.85" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_2_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="arm_link_3_1">
+    <inertial>
+      <origin xyz="0 0 -1.1" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.013698" iyy="0.058497" izz="0.067788" ixy="-0.018796" iyz="-0.001837" ixz="-0.005048"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -1.1" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_3_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -1.1" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_3_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="arm_link_4_1">
+    <inertial>
+      <origin xyz="0 0 -1.35" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.004834" iyy="0.008748" izz="0.006788" ixy="0.000672" iyz="0.000366" ixz="-0.003343"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 -1.35" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_4_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 -1.35" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_4_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="arm_link_5_1">
+    <inertial>
+      <origin xyz="-0.14 0 -1.475" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.002688" iyy="0.004032" izz="0.003002" ixy="-0.000564" iyz="-0.000503" ixz="-0.001383"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.14 0 -1.475" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_5_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.14 0 -1.475" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/arm_link_5_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="gripper_stator_1">
+    <inertial>
+      <origin xyz="-0.13 0.0 -1.6" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.004935" iyy="0.004592" izz="0.006025" ixy="0.001636" iyz="0.000825" ixz="-0.000536"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.13 0.0 -1.6" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/gripper_stator_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.13 0.0 -1.6" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/gripper_stator_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="gripper_clamp_1">
+    <inertial>
+      <origin xyz="-0.21 0 -1.6" rpy="0 0 0"/>
+      <mass value="0.05"/>
+      <inertia ixx="0.000492" iyy="0.000793" izz="0.000436" ixy="-0.000111" iyz="2.8e-05" ixz="5e-05"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.21 0 -1.6" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/gripper_clamp_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.21 0 -1.6" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/gripper_clamp_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="pick_basket_1">
+    <inertial>
+      <origin xyz="0.5 -0.0 -0.625" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="1.796099" iyy="1.599204" izz="2.816743" ixy="0.0" iyz="0.0" ixz="0.143919"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.5 -0.0 -0.625" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/pick_basket_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <origin xyz="0.5 -0.0 -0.625" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/pick_basket_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="rightFWD_wheel_1">
+    <inertial>
+      <origin xyz="-0.375 0.25 -0.25" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.116979" iyy="0.196232" izz="0.116979" ixy="-0.0" iyz="-0.0" ixz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.375 0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/rightFWD_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.375 0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/rightFWD_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="rightAFT_wheel_1">
+    <inertial>
+      <origin xyz="0.375 0.25 -0.25" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.116979" iyy="0.196232" izz="0.116979" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.375 0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/rightAFT_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin xyz="0.375 0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/rightAFT_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leftAFT_wheel_1">
+    <inertial>
+      <origin xyz="0.375 -0.25 -0.25" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.116979" iyy="0.196232" izz="0.116979" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0.375 -0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/leftAFT_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin xyz="0.375 -0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/leftAFT_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="leftFWD_wheel_1">
+    <inertial>
+      <origin xyz="-0.375 -0.25 -0.25" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.116979" iyy="0.196232" izz="0.116979" ixy="0.0" iyz="0.0" ixz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.375 -0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/leftFWD_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.375 -0.25 -0.25" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/leftFWD_wheel_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="camera_1">
+    <inertial>
+      <origin xyz="-0.25 0.125 -0.7" rpy="0 0 0"/>
+      <mass value="1"/>
+      <inertia ixx="0.005111" iyy="0.010477" izz="0.00741" ixy="0.0" iyz="0.0" ixz="0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="-0.25 0.125 -0.7" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/camera_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="-0.25 0.125 -0.7" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://chaleBOT_description/meshes/camera_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="Revolute_14" type="revolute">
+    <origin xyz="0.0 0.0 0.725" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="arm_link_1_1"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit effort="500" velocity="10" lower="-3.14159" upper="3.14159" />
+    <dynamics damping="1.0" friction="0.1"/>
+  </joint>
+
+  <joint name="Revolute_15" type="revolute">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="arm_link_1_1"/>
+    <child link="arm_link_2_1"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="500" velocity="10" lower="-3.14159" upper="3.14159" />
+    <dynamics damping="1.0" friction="0.1"/>
+  </joint>
+
+  <joint name="Revolute_16" type="revolute">
+    <origin xyz="0.0 0.0 0.25" rpy="0 0 0"/>
+    <parent link="arm_link_2_1"/>
+    <child link="arm_link_3_1"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="500" velocity="10" lower="-3.14159" upper="3.14159" />
+    <dynamics damping="1.0" friction="0.1"/>
+  </joint>
+
+  <joint name="Revolute_17" type="revolute">
+    <origin xyz="0 0 0.25" rpy="0 0 0"/>
+    <parent link="arm_link_3_1"/>
+    <child link="arm_link_4_1"/>
+    <axis xyz="1 0 0"/>
+    <limit effort="500" velocity="10" lower="-3.14159" upper="3.14159" />
+    <dynamics damping="1.0" friction="0.1"/>
+  </joint>
+
+  <joint name="Revolute_18" type="revolute">
+    <origin xyz="0.14 0 0.125" rpy="0 0 0"/>
+    <parent link="arm_link_4_1"/>
+    <child link="arm_link_5_1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="500" velocity="10" lower="-3.14159" upper="3.14159" />
+    <dynamics damping="1.0" friction="0.1"/>
+  </joint>
+
+  <joint name="Rigid_19" type="fixed">
+    <origin xyz="0 0 0.125" rpy="0 0 0"/>
+    <parent link="arm_link_5_1"/>
+    <child link="gripper_stator_1"/>
+  </joint>
+
+  <joint name="Slider_20" type="prismatic">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+    <parent link="gripper_stator_1"/>
+    <child link="gripper_clamp_1"/>
+    <axis xyz="1 0.0 0.0"/>
+    <limit lower="0.0" upper="0.08" effort="20" velocity="1" acceleration="0.1"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <joint name="Rigid_21" type="fixed">
+    <origin xyz="-0.5 0.0 0.5" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="pick_basket_1"/>
+  </joint>
+
+  <joint name="Revolute_23" type="continuous">
+    <origin xyz="0.375 -0.25 0.125" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="rightFWD_wheel_1"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <joint name="Revolute_24" type="continuous">
+    <origin xyz="-0.375 -0.25 0.125" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="rightAFT_wheel_1"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <joint name="Revolute_25" type="continuous">
+    <origin xyz="-0.375 0.25 0.125" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leftAFT_wheel_1"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <joint name="Revolute_26" type="continuous">
+    <origin xyz="0.375 0.25 0.125" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="leftFWD_wheel_1"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+  <joint name="Revolute_27" type="revolute">
+    <origin xyz="0.25 -0.125 0.575" rpy="0 0 -1.5708"/>
+    <parent link="base_link"/>
+    <child link="camera_1"/>
+    <axis xyz="0.0 0.0 1.0"/>
+    <limit effort="10" velocity="10" lower="-3.14159" upper="3.14159" />
+    <dynamics damping="1.0" friction="1.0"/>
+  </joint>
+
+<!--
+  ============================================================
+  ros2_control block for chaleBOT
+  PASTE THIS INSIDE chaleBOT.xacro just before the closing </robot>.
+
+  IMPORTANT (matches SO-ARM101 working pattern):
+    * State interface = position ONLY (no velocity)
+    * No <param>initial_value</param> hacks needed
+    * Hardware plugin uses fully-qualified name
+    * Plugin loader is in chaleBOT.gazebo (existing)
+  ============================================================
+-->
+
+<ros2_control name="chaleBOT_control" type="system">
+
+  <hardware>
+    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+  </hardware>
+
+  <!-- ===================== ARM (5 DOF) ===================== -->
+  <joint name="Revolute_14">
+    <command_interface name="position">
+      <param name="min">-3.14159</param>
+      <param name="max">3.14159</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="Revolute_15">
+    <command_interface name="position">
+      <param name="min">-3.14159</param>
+      <param name="max">3.14159</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="Revolute_16">
+    <command_interface name="position">
+      <param name="min">-3.14159</param>
+      <param name="max">3.14159</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="Revolute_17">
+    <command_interface name="position">
+      <param name="min">-3.14159</param>
+      <param name="max">3.14159</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <joint name="Revolute_18">
+    <command_interface name="position">
+      <param name="min">-3.14159</param>
+      <param name="max">3.14159</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <!-- ===================== GRIPPER (prismatic) ===================== -->
+  <joint name="Slider_20">
+    <command_interface name="position">
+      <param name="min">0.0</param>
+      <param name="max">0.08</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <!-- ===================== CAMERA PAN (revolute) ===================== -->
+  <joint name="Revolute_27">
+    <command_interface name="position">
+      <param name="min">-1.5708</param>
+      <param name="max">1.5708</param>
+    </command_interface>
+    <state_interface name="position"/>
+  </joint>
+
+  <!--
+    NOT INCLUDED:
+      Revolute_23, Revolute_24, Revolute_25, Revolute_26 (wheels)
+        -> driven by DiffDrive plugin in chaleBOT.gazebo
+      base_footprint_to_base_link (fixed joint)
+        -> not actuated, not exposed
+  -->
+
+</ros2_control>
+
+</robot>

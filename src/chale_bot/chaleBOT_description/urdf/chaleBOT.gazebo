@@ -1,0 +1,162 @@
+<?xml version="1.0" ?>
+<robot name="chaleBOT" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="body_color" value="Gazebo/Silver" />
+
+  <gazebo>
+  <plugin name="gz_ros2_control::GazeboSimROS2ControlPlugin"
+          filename="gz_ros2_control-system">
+    <parameters>$(find chaleBOT_description)/launch/controller.yaml</parameters>
+  </plugin>
+</gazebo>
+
+  <gazebo reference="base_link">
+    <material>${body_color}</material>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <selfCollide>true</selfCollide>
+    <gravity>true</gravity>
+  </gazebo>
+
+  <gazebo reference="arm_link_1_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide><gravity>false</gravity></gazebo>
+  <gazebo reference="arm_link_2_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide><gravity>false</gravity></gazebo>
+  <gazebo reference="arm_link_3_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide><gravity>false</gravity></gazebo>
+  <gazebo reference="arm_link_4_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide><gravity>false</gravity></gazebo>
+  <gazebo reference="arm_link_5_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide><gravity>false</gravity></gazebo>
+  <gazebo reference="gripper_stator_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="gripper_clamp_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="pick_basket_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="rightFWD_wheel_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="rightAFT_wheel_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="leftAFT_wheel_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="leftFWD_wheel_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+  <gazebo reference="camera_1"><material>${body_color}</material><mu1>0.2</mu1><mu2>0.2</mu2><selfCollide>true</selfCollide></gazebo>
+
+  <!-- Publish wheel joint states (joint_state_broadcaster doesn't see these
+     because the wheels aren't in the <ros2_control> block — DiffDrive owns them).
+     MoveIt requires every URDF joint to have a state, so we bridge the wheel
+     states from Gazebo to ROS. -->
+<gazebo>
+  <plugin filename="gz-sim-joint-state-publisher-system"
+          name="gz::sim::systems::JointStatePublisher">
+    <topic>wheel_states</topic>
+    <joint_name>Revolute_23</joint_name>
+    <joint_name>Revolute_24</joint_name>
+    <joint_name>Revolute_25</joint_name>
+    <joint_name>Revolute_26</joint_name>
+  </plugin>
+</gazebo>
+
+  <!-- ============ DiffDrive ============ -->
+  <gazebo>
+    <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+      <right_joint>Revolute_23</right_joint>
+      <left_joint>Revolute_26</left_joint>
+      <wheel_separation>0.5</wheel_separation>
+      <wheel_diameter>0.25</wheel_diameter>
+      <max_linear_acceleration>5</max_linear_acceleration>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <topic>/cmd_vel</topic>
+      <tf_topic>/tf</tf_topic>
+      <odom_topic>odom</odom_topic>
+      <frame_id>odom</frame_id>
+      <odom_publisher_frequency>10</odom_publisher_frequency>
+    </plugin>    
+  </gazebo>
+
+  <!-- <gazebo>
+  <plugin filename="gz-sim-pose-publisher-system"
+          name="gz::sim::systems::PosePublisher">
+    <publish_link_pose>false</publish_link_pose>
+    <publish_visual_pose>false</publish_visual_pose>
+    <publish_collision_pose>false</publish_collision_pose>
+    <publish_sensor_pose>false</publish_sensor_pose>
+    <publish_model_pose>true</publish_model_pose>
+    <use_pose_vector_msg>false</use_pose_vector_msg>
+    <static_publisher>true</static_publisher>
+    <static_update_frequency>50</static_update_frequency>
+  </plugin>
+</gazebo> -->
+
+
+  <!-- ============ Sensors system (required for cameras + lidar) ============ -->
+  <gazebo>
+    <plugin filename="gz-sim-sensors-system" name="gz::sim::systems::Sensors">
+      <render_engine>ogre2</render_engine>
+    </plugin>
+  </gazebo>
+
+
+  <!-- ============ Lidar ============ -->
+  <gazebo reference="base_link">
+    <sensor name="gpu_lidar" type="gpu_lidar">
+      <pose relative_to="base_link">0 0 0 0 0 0</pose>
+      <topic>scan</topic>
+      <gz_frame_id>base_link</gz_frame_id>
+      <update_rate>5</update_rate>
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14</min_angle>
+            <max_angle>3.14</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.2</min>
+          <max>12.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.001</stddev>
+        </noise>
+      </lidar>
+      <always_on>1</always_on>
+      <visualize>1</visualize>
+    </sensor>
+  </gazebo>
+
+
+  <!-- ============ RGB-D camera (replaces old depth-only sensor) ============ -->
+  <!-- type="rgbd_camera" publishes BOTH rgb and depth from one optical center.
+       Topics published by Gazebo:
+         /camera/image         (RGB)
+         /camera/depth_image   (depth 32FC1 in meters)
+         /camera/camera_info
+         /camera/points
+       These are remapped by the parameter_bridge to ROS-style names
+       (/camera/color/image_raw, /camera/depth/image_raw, etc.) -->
+  <gazebo reference="camera_1">
+    <sensor name="rgbd_camera" type="rgbd_camera">
+      <pose> 0.1 0 -0.125 0 0 0 </pose>
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <topic>camera</topic>
+      <!-- IMPORTANT: frame_id in the image headers. We use an "optical"
+           frame name so ROS tooling interprets axes correctly.
+           The launch file publishes camera_1 -> camera_1_optical static TF. -->
+      <gz_frame_id>camera_1_optical</gz_frame_id>
+      <visualize>true</visualize>
+      <camera>
+        <horizontal_fov>1.571</horizontal_fov>
+        <image>
+          <width>640</width>
+          <height>480</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>5.0</far>
+        </clip>
+      </camera>
+    </sensor>
+  </gazebo>
+
+</robot>

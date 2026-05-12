@@ -1,0 +1,338 @@
+<?xml version="1.0" ?>
+<sdf version="1.11">
+  <world name="greenhouse_world">
+
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>300 300</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Greenhouse floor -->
+    <model name="greenhouse_floor">
+      <static>true</static>
+      <pose>0 0 0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>14 6 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>14 6 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.35 0.25 1</ambient>
+            <diffuse>0.50 0.40 0.30 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Greenhouse side walls -->
+    <model name="wall_left">
+      <static>true</static>
+      <pose>0 3 1.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>14 0.1 3.0</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>14 0.1 3.0</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_right">
+      <static>true</static>
+      <pose>0 -3 1.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>14 0.1 3.0</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>14 0.1 3.0</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_front">
+      <static>true</static>
+      <pose>7 0 1.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 6 3.0</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 6 3.0</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_back">
+      <static>true</static>
+      <pose>-7 0 1.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.1 6 3.0</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.1 6 3.0</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Roof -->
+    <model name="roof">
+      <static>true</static>
+      <pose>0 0 3.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>14 6 0.08</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>14 6 0.08</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.85 0.95 0.95 0.25</ambient>
+            <diffuse>0.85 0.95 0.95 0.25</diffuse>
+            <specular>0.2 0.2 0.2 0.25</specular>
+          </material>
+          <transparency>0.6</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Nursery bed 1 -->
+    <model name="nursery_bed_1">
+      <static>true</static>
+      <pose>0 1.2 0.15 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>10.5 0.8 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>10.5 0.8 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.32 0.18 0.08 1</ambient>
+            <diffuse>0.42 0.25 0.12 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Nursery bed 2 -->
+    <model name="nursery_bed_2">
+      <static>true</static>
+      <pose>0 -1.2 0.15 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>10.5 0.8 0.3</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>10.5 0.8 0.3</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.32 0.18 0.08 1</ambient>
+            <diffuse>0.42 0.25 0.12 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Row 1 : 20 crops -->
+    <model name="vegetable_crop_r1_01">
+      <static>true</static>
+      <pose>-4.75 1.2 0.30 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <mesh>
+              <uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri>
+              <scale>0.001 0.001 0.001</scale>
+            </mesh>
+          </geometry>
+          <material>
+            <ambient>0.0 0.6 0.0 1</ambient>
+            <diffuse>0.0 0.8 0.0 1</diffuse>
+            <specular>0.1 0.1 0.1 1</specular>
+          </material>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box><size>0.35 0.35 0.8</size></box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name="vegetable_crop_r1_02"><static>true</static><pose>-4.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_03"><static>true</static><pose>-3.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_04"><static>true</static><pose>-3.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_05"><static>true</static><pose>-2.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_06"><static>true</static><pose>-2.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_07"><static>true</static><pose>-1.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_08"><static>true</static><pose>-1.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_09"><static>true</static><pose>-0.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_10"><static>true</static><pose>-0.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_11"><static>true</static><pose>0.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_12"><static>true</static><pose>0.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_13"><static>true</static><pose>1.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_14"><static>true</static><pose>1.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_15"><static>true</static><pose>2.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_16"><static>true</static><pose>2.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_17"><static>true</static><pose>3.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_18"><static>true</static><pose>3.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_19"><static>true</static><pose>4.25 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r1_20"><static>true</static><pose>4.75 1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+
+    <!-- Row 2 : 20 crops -->
+    <model name="vegetable_crop_r2_01"><static>true</static><pose>-4.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_02"><static>true</static><pose>-4.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_03"><static>true</static><pose>-3.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_04"><static>true</static><pose>-3.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_05"><static>true</static><pose>-2.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_06"><static>true</static><pose>-2.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_07"><static>true</static><pose>-1.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_08"><static>true</static><pose>-1.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_09"><static>true</static><pose>-0.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_10"><static>true</static><pose>-0.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_11"><static>true</static><pose>0.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_12"><static>true</static><pose>0.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_13"><static>true</static><pose>1.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_14"><static>true</static><pose>1.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_15"><static>true</static><pose>2.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_16"><static>true</static><pose>2.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_17"><static>true</static><pose>3.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_18"><static>true</static><pose>3.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_19"><static>true</static><pose>4.25 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+    <model name="vegetable_crop_r2_20"><static>true</static><pose>4.75 -1.2 0.30 0 0 0</pose><link name="link"><visual name="visual"><geometry><mesh><uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri><scale>0.001 0.001 0.001</scale></mesh></geometry><material><ambient>0.0 0.6 0.0 1</ambient><diffuse>0.0 0.8 0.0 1</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual><collision name="collision"><geometry><box><size>0.35 0.35 0.8</size></box></geometry></collision></link></model>
+
+  </world>
+</sdf>

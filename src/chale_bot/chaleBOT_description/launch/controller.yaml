@@ -1,0 +1,76 @@
+
+controller_manager:
+  ros__parameters:
+    update_rate: 10  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    camera_controller:
+      type: position_controllers/JointGroupPositionController
+
+
+# ----------------------- ARM (5 DOF) -----------------------
+# arm_controller:
+#   ros__parameters:
+#     joints:
+#       - Revolute_14
+#       - Revolute_15
+#       - Revolute_16
+#       - Revolute_17
+#       - Revolute_18
+
+#     command_interfaces:
+#       - position
+
+#     state_interfaces:
+#       - position
+
+#     open_loop_control: true
+#     allow_integration_in_goal_trajectories: true
+
+arm_controller:
+  ros__parameters:
+    joints:
+      - Revolute_14
+      - Revolute_15
+      - Revolute_16
+      - Revolute_17
+      - Revolute_18
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    open_loop_control: true
+    allow_integration_in_goal_trajectories: true
+
+# ----------------------- GRIPPER (prismatic) -----------------------
+gripper_controller:
+  ros__parameters:
+    joints:
+      - Slider_20
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+
+    open_loop_control: true
+    allow_integration_in_goal_trajectories: true
+
+
+# ----------------------- CAMERA PAN -----------------------
+# JointGroupPositionController accepts std_msgs/Float64MultiArray
+# on /camera_controller/commands. No state_interfaces required for
+# this controller type.
+camera_controller:
+  ros__parameters:
+    joints:
+      - Revolute_27

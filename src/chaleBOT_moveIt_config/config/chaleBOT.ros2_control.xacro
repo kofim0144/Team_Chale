@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="chaleBOT_ros2_control" params="name initial_positions_file">
+        <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
+
+        <ros2_control name="${name}" type="system">
+            <hardware>
+                <!-- By default, set up controllers for simulation. This won't work on real hardware -->
+                <plugin>mock_components/GenericSystem</plugin>
+            </hardware>
+            <joint name="virtual_joint">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['virtual_joint']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Revolute_14">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Revolute_14']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Revolute_15">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Revolute_15']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Revolute_16">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Revolute_16']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Revolute_17">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Revolute_17']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Revolute_18">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Revolute_18']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Slider_20">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Slider_20']}</param>
+                </state_interface>
+            </joint>
+            <joint name="Revolute_27">
+                <command_interface name="position"/>
+                <state_interface name="position">
+                  <param name="initial_value">${initial_positions['Revolute_27']}</param>
+                </state_interface>
+            </joint>
+
+        </ros2_control>
+    </xacro:macro>
+</robot>

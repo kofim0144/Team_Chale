@@ -1,0 +1,39 @@
+# This config file is used by ros2_control
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    arm_group_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+
+    camera_controller:
+      type: position_controllers/GripperActionController
+
+
+    end_effector_controller:
+      type: position_controllers/GripperActionController
+
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+arm_group_controller:
+  ros__parameters:
+    joints:
+      - Revolute_14
+      - Revolute_15
+      - Revolute_16
+      - Revolute_17
+      - Revolute_18
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+    allow_nonzero_velocity_at_trajectory_end: true
+camera_controller:
+  ros__parameters:
+    joint: Revolute_27
+end_effector_controller:
+  ros__parameters:
+    joint: Slider_20

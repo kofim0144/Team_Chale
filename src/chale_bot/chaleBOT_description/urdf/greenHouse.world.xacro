@@ -1,0 +1,400 @@
+<?xml version="1.0"?>
+<sdf version="1.11" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- =========================
+       Parameters
+  ========================== -->
+  <xacro:property name="crop_count" value="5"/>
+  <xacro:property name="crop_spacing" value="1.2"/>
+
+  <xacro:property name="aisle_width" value="1.0"/>
+
+  <xacro:property name="rail_length" value="${(crop_count - 1) * crop_spacing + 1.0}"/>
+  <xacro:property name="rail_width" value="0.05"/>
+  <xacro:property name="rail_height" value="0.05"/>
+  <xacro:property name="rail_gap" value="0.40"/>
+
+  <xacro:property name="bed_width" value="0.8"/>
+  <xacro:property name="bed_height" value="0.30"/>
+
+  <xacro:property name="crop_collision_size" value="0.35 0.35 0.8"/>
+  <xacro:property name="crop_scale" value="0.001 0.001 0.001"/>
+
+  <xacro:property name="wall_thickness" value="0.10"/>
+  <xacro:property name="wall_height" value="3.0"/>
+  <xacro:property name="roof_thickness" value="0.08"/>
+
+  <!-- Derived dimensions -->
+  <xacro:property name="row_y_offset" value="${aisle_width/2.0 + bed_width/2.0}"/>
+  <xacro:property name="greenhouse_length" value="${rail_length + 3.0}"/>
+  <xacro:property name="greenhouse_width" value="${2.0*bed_width + aisle_width + 2.0}"/>
+  <xacro:property name="bed_length" value="${rail_length + 0.6}"/>
+
+  <!-- Crop row x start so row is centered -->
+  <xacro:property name="crop_x_start" value="${-((crop_count - 1) * crop_spacing) / 2.0}"/>
+
+  <world name="greenhouse_world">
+
+    <physics name="default_physics" type="ode">
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+    </physics>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>300 300</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>300 300</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <!-- Greenhouse floor -->
+    <model name="greenhouse_floor">
+      <static>true</static>
+      <pose>0 0 0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${greenhouse_width} 0.02</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${greenhouse_width} 0.02</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.45 0.35 0.25 1</ambient>
+            <diffuse>0.50 0.40 0.30 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Side walls -->
+    <model name="wall_left">
+      <static>true</static>
+      <pose>0 ${greenhouse_width/2.0} ${wall_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${wall_thickness} ${wall_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${wall_thickness} ${wall_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_right">
+      <static>true</static>
+      <pose>0 ${-greenhouse_width/2.0} ${wall_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${wall_thickness} ${wall_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${wall_thickness} ${wall_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Front and back walls -->
+    <model name="wall_front">
+      <static>true</static>
+      <pose>${greenhouse_length/2.0} 0 ${wall_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${wall_thickness} ${greenhouse_width} ${wall_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${wall_thickness} ${greenhouse_width} ${wall_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <model name="wall_back">
+      <static>true</static>
+      <pose>${-greenhouse_length/2.0} 0 ${wall_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${wall_thickness} ${greenhouse_width} ${wall_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${wall_thickness} ${greenhouse_width} ${wall_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.8 0.9 0.9 0.35</ambient>
+            <diffuse>0.8 0.9 0.9 0.35</diffuse>
+            <specular>0.2 0.2 0.2 0.35</specular>
+          </material>
+          <transparency>0.5</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Roof -->
+    <model name="roof">
+      <static>true</static>
+      <pose>0 0 ${wall_height + roof_thickness/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${greenhouse_width} ${roof_thickness}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${greenhouse_length} ${greenhouse_width} ${roof_thickness}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.85 0.95 0.95 0.25</ambient>
+            <diffuse>0.85 0.95 0.95 0.25</diffuse>
+            <specular>0.2 0.2 0.2 0.25</specular>
+          </material>
+          <transparency>0.6</transparency>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Nursery bed 1 -->
+    <model name="nursery_bed_1">
+      <static>true</static>
+      <pose>0 ${row_y_offset} ${bed_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${bed_length} ${bed_width} ${bed_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${bed_length} ${bed_width} ${bed_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.32 0.18 0.08 1</ambient>
+            <diffuse>0.42 0.25 0.12 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Nursery bed 2 -->
+    <model name="nursery_bed_2">
+      <static>true</static>
+      <pose>0 ${-row_y_offset} ${bed_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${bed_length} ${bed_width} ${bed_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${bed_length} ${bed_width} ${bed_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.32 0.18 0.08 1</ambient>
+            <diffuse>0.42 0.25 0.12 1</diffuse>
+            <specular>0.05 0.05 0.05 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Rails centered in aisle -->
+    <model name="rail_left">
+      <static>true</static>
+      <pose>0 ${rail_gap/2.0} ${rail_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${rail_length} ${rail_width} ${rail_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${rail_length} ${rail_width} ${rail_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.45 0.45 0.45 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="rail_right">
+      <static>true</static>
+      <pose>0 ${-rail_gap/2.0} ${rail_height/2.0} 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>${rail_length} ${rail_width} ${rail_height}</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>${rail_length} ${rail_width} ${rail_height}</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.45 0.45 0.45 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Row 1 crops -->
+    <xacro:macro name="crop_model" params="name px py pz">
+      <model name="${name}">
+        <static>true</static>
+        <pose>${px} ${py} ${pz} 0 0 0</pose>
+        <link name="link">
+          <visual name="visual">
+            <geometry>
+              <mesh>
+                <uri>package://chaleBOT_description/worlds/models/vegetable_crop/meshes/vegetable_crop.stl</uri>
+                <scale>${crop_scale}</scale>
+              </mesh>
+            </geometry>
+            <material>
+              <ambient>0.0 0.6 0.0 1</ambient>
+              <diffuse>0.0 0.8 0.0 1</diffuse>
+              <specular>0.1 0.1 0.1 1</specular>
+            </material>
+          </visual>
+          <collision name="collision">
+            <geometry>
+              <box>
+                <size>${crop_collision_size}</size>
+              </box>
+            </geometry>
+          </collision>
+        </link>
+      </model>
+    </xacro:macro>
+
+    <xacro:crop_model name="vegetable_crop_r1_01" px="${crop_x_start + 0*crop_spacing}" py="${ row_y_offset }" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r1_02" px="${crop_x_start + 1*crop_spacing}" py="${ row_y_offset }" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r1_03" px="${crop_x_start + 2*crop_spacing}" py="${ row_y_offset }" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r1_04" px="${crop_x_start + 3*crop_spacing}" py="${ row_y_offset }" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r1_05" px="${crop_x_start + 4*crop_spacing}" py="${ row_y_offset }" pz="${bed_height}" />
+
+    <!-- Row 2 crops -->
+    <xacro:crop_model name="vegetable_crop_r2_01" px="${crop_x_start + 0*crop_spacing}" py="${-row_y_offset}" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r2_02" px="${crop_x_start + 1*crop_spacing}" py="${-row_y_offset}" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r2_03" px="${crop_x_start + 2*crop_spacing}" py="${-row_y_offset}" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r2_04" px="${crop_x_start + 3*crop_spacing}" py="${-row_y_offset}" pz="${bed_height}" />
+    <xacro:crop_model name="vegetable_crop_r2_05" px="${crop_x_start + 4*crop_spacing}" py="${-row_y_offset}" pz="${bed_height}" />
+
+  </world>
+</sdf>

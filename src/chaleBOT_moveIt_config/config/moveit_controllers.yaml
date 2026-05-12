@@ -1,0 +1,37 @@
+# MoveIt uses this configuration for controller management
+
+moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControllerManager
+
+moveit_simple_controller_manager:
+  controller_names:
+    - arm_controller
+    - gripper_controller
+    # - camera_tower_group_controller
+
+  arm_controller:
+    type: FollowJointTrajectory
+    joints:
+      # - virtual_joint
+      - Revolute_14
+      - Revolute_15
+      - Revolute_16
+      - Revolute_17
+      - Revolute_18
+    action_ns: follow_joint_trajectory
+    default: true
+
+  gripper_controller:
+    # type: GripperCommand
+    type: FollowJointTrajectory
+    joints:
+      - Slider_20
+    # action_ns: gripper_cmd
+    action_ns: follow_joint_trajectory
+    default: true
+
+  # camera_tower_group_controller:
+  #   type: FollowJointTrajectory
+  #   joints:
+  #     - Revolute_27
+  #   action_ns: follow_joint_trajectory
+  #   default: true
