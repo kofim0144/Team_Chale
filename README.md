@@ -96,7 +96,7 @@ abrupt motion.
 
 | Component | Description |
 |-----------|-------------|
-| Robotic Arm | 6-DOF arm mounted on a mobile ground rover |
+| Robotic Arm | 5-DOF arm mounted on a mobile ground rover |
 | Rover | Wheeled mobile robot that navigates between greenhouse rows |
 | Camera | RGB-D camera for real-time fruit detection and depth sensing |
 | End-Effector | Mechanical gripper + cutter |
@@ -122,18 +122,6 @@ The full pipeline is tested in Gazebo. Performance is tracked using:
 - **Trajectory smoothness**
 - **Fruit detection and localization accuracy**
 - **Sorting accuracy by color and size**
-
----
-
-## Expected Results
-
-| Metric | Target |
-|--------|--------|
-| Harvest success rate | > 80% under normal visual conditions |
-| Cycle time per fruit | 10 – 20 seconds |
-| Trajectory | Smooth, no abrupt speed changes |
-| Self-correction | Minor positional errors corrected during approach |
-| Sorting | Correct classification by color and size |
 
 ---
 
